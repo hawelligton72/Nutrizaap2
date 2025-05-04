@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste NutriZaap</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #f5f5f5; }
+    button { background-color: #4CAF50; color: white; border: none; padding: 15px 30px; font-size: 16px; cursor: pointer; border-radius: 8px; }
+    #resposta { margin-top: 20px; background: #fff; padding: 20px; border-radius: 8px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h2>Enviar mensagem de teste para a API NutriZaap</h2>
+  <button onclick="enviarMensagem()">Enviar Mensagem</button>
+  <div id="resposta"></div>
+
+  <script>
+    function enviarMensagem() {
+      const payload = {
+        phone: "11999999999",
+        message: "Olá! Esta é uma mensagem de teste enviada para o NutriZaap."
+      };
+
+      fetch("/api/send-message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("resposta").innerText = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById("resposta").innerText = "Erro ao enviar mensagem: " + error;
+      });
+    }
+  </script>
+</body>
+</html>
